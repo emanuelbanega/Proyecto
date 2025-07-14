@@ -1,0 +1,40 @@
+.tabla {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    border-color: #dee2e6;
+    color: #fff;
+    background-color: #000036;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 3px 3px 10px black;
+    caption-side: inherit;
+}
+
+caption {
+    color: #fff;
+}
+
+thead {
+    background: rgba(103, 232, 11, 0.4);
+}
+
+tr {
+    text-align: justify;
+}
+
+th {
+    padding: 0.5rem 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 0.5rem 0.5rem;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+}
+
+tbody tr:hover {
+    background: rgba(243, 103, 199, 0.4);
+}
