@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/associates/associated_detail.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Detalle Asociado</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div id="for-box">
+    <div class="cabecera h2DatosAsociado"><i class="fa-solid fa-user-large"></i>
+        <h2>Datos asociado:</h2>
+    </div>
+    <div class="datoNombre">
+        <label class="labelNombre">Nombre: </label>
+        <label class="dato">{{associated.name}}</label>
+    </div>
+    <div class="datoApellido">
+        <label class="labelApellido">Apellido: </label>
+        <label class="dato">{{associated.surname}}</label>
+    </div>
+    <div class="datoGenero">
+        <label class="labelGenero">Genero: </label>
+        <label class="dato">{% if associated.gender=='M' %} Varon {% elif associated.gender=='F' %} Mujer {% else
+            %} Otro {% endif %}</label>
+    </div>
+
+    <div class="cabecera h2DatosDocument"><i class="fa-solid fa-id-card"></i>
+        <h2>Documentación:</h2>
+    </div>
+    <div class="datoDocument">
+        <label class="labelDocument"># documento: </label>
+        <label class="dato">{{associated.document_type}} {{associated.document_number}}</label>
+    </div>
+    <div class="datoNumAsso">
+        <label class="labelNumAsso"># asociado: </label>
+        <label class="dato">{{associated.id}}</label>
+    </div>
+
+    <div class="cabecera h2DatosPersonales"><i class="fa-solid fa-circle-info"></i>
+        <h3>Datos personales:</h3>
+    </div>
+    <div class="datoDireccion">
+        <label class="labelDireccion">Dirección: </label>
+        <label class="dato">{{associated.direction}}</label>
+    </div>
+
+    <div class="datoEmail">
+        <label class="labelEmail">Email: </label>
+        {% if associated.mail %}
+        <label class="dato">{{associated.mail}}</label>
+        {% else %}
+        <label class="dato">-</label>
+        {% endif %}
+    </div>
+
+    <div class="datoTel">
+        <label class="labelTel">Telefono: </label>
+        {% if associated.phone %}
+        <label class="dato">{{associated.phone}}</label>
+        {% else %}
+        <label class="dato">-</label>
+        {% endif %}
+    </div>
+    <div class="linea"></div>
+    <div class="div-botones-pago-disci">
+        <a class="btn btn-modificar"
+            href="{{ url_for('quotas.quotas_index_page', id_associated=associated.id, num_page = 1) }}">Cuotas</a>
+        <a class="btn btn-modificar"
+            href="{{ url_for('associates.list_sports_associated', associated_id=associated.id, current_page = current_page) }}">Disciplinas</a>
+
+    </div>
+    <div id="div-botones">
+        <a class="btn btn-volver"
+            href="{{ url_for('associates.associated_index_page', num = current_page) }}">volver</a>
+        <a class="btn btn-modificar"
+            href="{{ url_for('associates.update_associated_form', associated_id=associated.id, current_page = current_page) }}">modificar</a>
+    </div>
+
+</div>
+
+{% endblock %}

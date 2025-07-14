@@ -1,0 +1,54 @@
+@import "styles.css";
+
+.content {
+    color: #fff;
+}
+
+.content h1 {
+    font-family: emoji;
+    font-size: 13vw;
+}
+
+.content h3 {
+    margin: 20px;
+    text-decoration-line: underline;
+
+}
+
+.content p {
+    margin: 10px;
+    max-width: 40%;
+    font-family: system-ui;
+    background-color: #414c3b57;
+    text-align: justify;
+    padding: 10px;
+}
+
+.content img {
+    display: none;
+}
+
+@media screen and (max-width: 707px) {
+    p {
+        max-width: 60%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    h3 {
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 474px) {
+    .content p {
+        max-width: 95%;
+    }
+
+    .content img {
+        display: block;
+        max-width: 95%;
+    }
+
+}

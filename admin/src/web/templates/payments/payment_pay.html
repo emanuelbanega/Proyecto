@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% set active_page = "pagos" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block title %}
+<title>Realizar Pago</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<form class="recibo" action="{{ url_for('payments.pagar_post',quotaId=id_quota,current_page=current_page)}}" method="POST">
+    <label for="#recibo"># de Recibo</label>
+    <input name="#recibo" type="text" value="{{id_quota}}" disabled>
+    <br>
+    <label for="membresia">Membresia:</label>
+    <input type="text" value="{{quota.membership_amount}} {{quota.currency_type}}" disabled>
+    <br>
+    <label>Disciplinas:</label>
+    <ul>
+        {% for s in quota.sports %}
+            <li>{{s.Name}}: <input type="text" value="{{s.monthly_fee}} {{quota.currency_type}}" disabled></li>
+        {% endfor %}
+    </ul>
+    <br>
+    {% if overdue_fee %}
+        <label for="membresia">Recargo:</label>
+        <input type="text" value="{{amount_extra}} {{quota.currency_type}}" disabled>
+        <br>
+    {% endif %}
+
+
+    <label for="monto">Monto Total:</label>
+    {% if is_defaulter %}
+        <input name="monto" type="text" value="{{quota.total_amount + amount_extra}} {{ quota.currency_type }}" disabled>
+    {% else %}
+        <input name="monto" type="text" value="{{quota.total_amount}} {{ quota.currency_type }}" disabled>
+    {% endif %}
+    <br>
+
+
+    <button type="submit">Realizar Pago</button>
+</form>
+
+
+<a class="btn-nuevo-pago" style="margin-left: 20px;" href="{{ url_for('payments.new_payment',current_page=current_page)}}">Volver</a>
+
+<script>
+    function pagar() {
+        const value = document.getElementById('selectQuota').value;
+        console.log("hola")
+    }
+</script>
+
+{% endblock %}

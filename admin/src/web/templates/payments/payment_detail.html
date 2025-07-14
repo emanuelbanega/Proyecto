@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% set active_page = "pagos" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block title %}
+<title>Detalle Pago</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div id="recibo" class="recibo-pdf">
+    <h1>{{title}}</h1>
+    <small># de Recibo {{payment.id}}</small>  
+    <p>Se recibio de {{payment.quotas[0].associates.name}} {{payment.quotas[0].associates.name}} <br>
+        el importe de {{payment.amount}} {{currency_type}} por el concepto de la couta <br>
+        societaria correspondiente a la fecha <b id="month_info">{{payment.quotas[0].end_date.strftime('%d-%m-%Y')}}</b>
+    </p>
+</div>
+
+<a class="btn-nuevo-pago" style="margin-left: 20px;" href="{{ url_for('payments.payment_index_page', num=current_page) }}">Volver</a>
+<button class="btn-nuevo-pago" style="background-color: grey;" onclick="javascript:downloadVoucher();">Descargar</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script>
+    function downloadVoucher() {
+
+        const recibo = document.getElementById('recibo');
+        const monthInfo = document.getElementById('month_info').innerText
+
+        html2canvas(recibo, {
+            onrendered: function (canvasObj) {
+                var pdf = new jsPDF({
+                    orientation: "landscape",
+                    unit: "in",
+                    format: [8, 4]
+                }),
+                    pdfConf = {
+                        pagesplit: false,
+                        backgroundColor: '#FFF'
+                    };
+                document.body.appendChild(canvasObj); //appendChild is required for html to add page in pdf
+                pdf.addHTML(canvasObj, 0, 0, pdfConf, function () {
+                    document.body.removeChild(canvasObj);
+                    //pdf.addPage();
+                    pdf.save(`recibo-${monthInfo}.pdf`);
+                    window.location.reload()
+                });
+            }
+        });
+    }
+
+</script>
+
+{% endblock %}

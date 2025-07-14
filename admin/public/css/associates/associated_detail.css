@@ -1,0 +1,184 @@
+@import "../detail.css";
+
+#for-box {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(9, auto);
+
+    grid-template-areas: "h2DatosAsociado h2DatosAsociado"
+        "datoNombre datoApellido"
+        "datoGenero datoGenero"
+        "h2DatosDocument h2DatosDocument"
+        "datoNumAsso datoDocument"
+        "h2DatosPersonales h2DatosPersonales"
+        "datoDireccion datoDireccion"
+        "datoEmail datoTel"
+        "linea linea"
+        "div-botones-pago-disci div-botones";
+
+}
+
+
+.h2DatosAsociado {
+    grid-area: h2DatosAsociado;
+
+}
+
+.datoNombre {
+    grid-area: datoNombre;
+}
+
+.datoApellido {
+    grid-area: datoApellido;
+}
+
+.datoGenero {
+    grid-area: datoGenero;
+}
+
+.h2DatosDocument {
+    grid-area: h2DatosDocument;
+}
+
+.datoDocument {
+    grid-area: datoDocument;
+}
+
+.datoNumAsso {
+    grid-area: datoNumAsso;
+}
+
+.h2DatosPersonales {
+    grid-area: h2DatosPersonales;
+}
+
+.datoDireccion {
+    grid-area: datoDireccion;
+}
+
+.datoEmail {
+    grid-area: datoEmail;
+}
+
+.datoTel {
+    grid-area: datoTel;
+}
+
+.div-botones-pago-disci {
+    grid-area: div-botones-pago-disci;
+}
+
+.div-botones {
+    grid-area: div-botones;
+}
+
+.labelNombre,
+.labelApellido,
+.labelGenero,
+.labelDocument,
+.labelNumAsso,
+.labelDireccion,
+.labelEmail,
+.labelTel {
+    font-weight: bold;
+}
+
+.div-botones-pago-disci {
+    display: flex;
+    justify-content: space-between;
+}
+
+.div-botones-pago-disci .btn {
+    text-decoration: none;
+    background: #1c96dd;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 4px 6px;
+    flex: 1;
+    margin: 0 5px;
+    transition: .3s;
+}
+
+.div-botones-pago-disci .btn:hover {
+    background: #1780bc;
+}
+
+@media screen and (max-width: 928px) {
+    #for-box {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(13, auto);
+        grid-gap: 10px;
+        grid-template-areas: "h2DatosAsociado"
+            "datoNombre"
+            "datoApellido"
+            "datoGenero"
+            "h2DatosDocument"
+            "datoNumAsso"
+            "datoDocument"
+            "h2DatosPersonales"
+            "datoDireccion"
+            "datoEmail"
+            "datoTel"
+            "linea"
+            "div-botones-pago-disci"
+            "div-botones";
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    #for-box {
+        grid-template-rows: repeat(13, auto);
+        grid-gap: 2px;
+        grid-template-areas: "h2DatosAsociado"
+            "datoNombre"
+            "datoApellido"
+            "datoGenero"
+            "h2DatosDocument"
+            "datoNumAsso"
+            "datoDocument"
+            "h2DatosPersonales"
+            "datoDireccion"
+            "datoEmail"
+            "datoTel"
+            "linea"
+            "div-botones-pago-disci"
+            "div-botones";
+    }
+
+    .linea {
+        padding: 1px 50px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    .datoNombre,
+    .datoApellido,
+    .datoGenero,
+    .datoDocument,
+    .datoNumAsso,
+    .datoDireccion,
+    .datoEmail,
+    .datoTel {
+        display: grid;
+    }
+}
+
+@media screen and (max-width: 389px) {
+
+    .div-botones-pago-disci,
+    #div-botones {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .cabecera {
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 20px;
+    }
+}

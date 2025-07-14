@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% set active_page = "users" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/users/new_user.css') }}">
+{% endblock %}
+{% block title %}
+<title>Nuevo usuario</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div class="div-form">
+    <h2>Nuevo Usuario</h2>
+    <form id="for-box" action="{{ url_for('users.add_user', current_page=return_page)}}" method="post">
+        <label class="labelCorreo">Correo:</label>
+        <input class="inputCorreo" type="email" id="email" name="email" maxlength="50" placeholder="Ingrese el email" {%
+            if params %} value="{{ params['email'].lower().strip()  }}" {% endif %} autocomplete="off" required>
+        <label class="labelUserName">Nombre de usuario:</label>
+        <input class="inputUserName" type="text" id="userName" name="userName" maxlength="50"
+            placeholder="Ingrese el nombre de usuario" {% if params %} value="{{ params['userName'].strip()  }}" {%
+            endif %} autocomplete="off" required>
+        <label class="labelPass">Contraseña:</label>
+        <input class="inputPass" type="password" id="new-user-pass" name="password" placeholder="Ingrese una contraseña"
+            maxlength="30" {% if params %} value="{{ params['password']  }}" {% endif %} required>
+        <label class="labelApellido">Apellido:</label>
+        <input class="inputApellido" type="text" id="new-user-last-name" name="last_name" maxlength="100"
+            placeholder="Ingrese el apellido" {% if params %} value="{{ params['last_name'].strip()  }}" {% endif %}
+            required>
+        <label class="labelNombre">Nombre:</label>
+        <input class="inputNombre" type="text" id="new-user-first-name" name="first_name" maxlength="100"
+            placeholder="Ingrese el nombre" {% if params %} value="{{ params['first_name'].strip()  }}" {% endif %}
+            required>
+        <input class="botonAgregar" type="submit" value="Agregar Usuario">
+        <a class="botonCancelar" href="{{ url_for('users.user_index', num=return_page) }}">cancelar</a>
+    </form>
+</div>
+{% endblock %}

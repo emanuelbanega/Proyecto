@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% set active_page = "sports" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sports/new_sport.css') }}">
+{% endblock %}
+{% block title %}
+<title>Detalle disciplina</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div class="div-form">
+    <h2>Nueva Disciplina</h2>
+    <form id="for-box" action="{{ url_for('sports.add_sport', current_page=return_page)}}" method="post">
+        <label class="labelNombre">Nombre:</label>
+        <input class="inputNombre" maxlength="50" type="text" id="sportName" name="sportName" placeholder="Ingrese el nombre" {% if
+            placeholder %} value="{{ placeholder['sportName'].strip()  }}" maxlength="50" {% endif %} autocomplete="off" required>
+        <label class="labelDivision">Division:</label>
+        <input class="inputDivision" maxlength="50" type="text" id="division" name="division" placeholder="Ingrese la división" {% if
+            placeholder %} value="{{ placeholder['division'].strip()  }}" maxlength="50" {% endif %} autocomplete="off" required>
+        <label class="labelInstructores">Instructores:</label>
+        <input class="inputInstructores" maxlength="300" type="text" id="instructors" name="instructors"
+            placeholder="Ingrese los instructores" maxlength="50" {% if placeholder %}
+            value="{{ placeholder['instructors'].strip()  }}" maxlength="50" {% endif %} required>
+        <label class="labelHorarios">Horarios:</label>
+        <input class="inputHorarios" maxlength="300" type="text" id="schedule" name="schedule" placeholder="Ingrese el horario" {% if
+            placeholder %} value="{{ placeholder['schedule'].strip()  }}" maxlength="50" {% endif %} required>
+        <label class="labelCuota">Cuota:</label>
+        <input class="inputCuota" maxlength="10" type="text" id="fee" name="fee" placeholder="Ingrese el valor de la cuota" {% if
+            placeholder %} value="{{ placeholder['fee'].strip()  }}" {% endif %} required>
+        <label class="labelHabilitado">Habilitado:</label>
+        <input class="checkboxHabilitado" type="checkbox" id="enabled" name="enabled">
+        <input class="botonAgregar" type="submit" value="Agregar disciplina">
+        <a class="botonCancelar" href="{{ url_for('sports.sport_index_page', num=return_page) }}">Volver</a>
+    </form>
+</div>
+
+{% endblock %}

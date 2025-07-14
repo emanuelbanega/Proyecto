@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+{% set active_page = "sports" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sports/sports.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Disciplinas</title>
+{% endblock %}
+
+{% block content %}
+
+<table class="tabla">
+    <caption>
+        <div class="div-titulo-buscar">
+            <h1 class="nom-pagina">Listado de disciplinas:</h1>
+            <div class="div-buscar">
+                <form class="buscar" action="{{url_for(
+                             'sports.sport_index_page_filter',
+                             num=1
+                             ) }}" method="POST">
+                    <select class="select-estado" name="estado">
+                        <option value="all">Estado</option>
+                        <option value="habilitada">Habilitada</option>
+                        <option value="deshabilitada">Deshabilitada</option>
+                    </select>
+                    <input class="buscar_nombre" name="name" placeholder="Ingrese el nombre">
+                    <button class="boton-filtrar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categorias</th>
+            <th>Instructores</th>
+            <th>Horarios</th>
+            <th>Costo mensual</th>
+            <th>Habilitada</th>
+            <th>Editar</th>
+            <th>Habilitar</th>
+            <th>Eliminar</th>
+            <th>Inscriptos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if sports.items %}
+        {% for sport in sports.items %}
+        <tr>
+            <td>{{ sport.name }}</td>
+            <td>{{ sport.division }}</td>
+            <td>{{ sport.instructors_names }}</td>
+            <td>{{ sport.schedule }}</td>
+            <td>{{ sport.monthly_fee }} {{ currency }}</th>
+                {% if sport.enabled==True %}
+            <td>Si</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td>
+                <a class="btn btn-detalle"
+                    href="{{ url_for('sports.update_sport_form', sport_id=sport.id, current_page=sports.page) }}">Editar</a>
+            </td>
+            <td>
+                {% if sport.enabled==False %}
+                <a class="btn btn-bloquear"
+                    href="{{ url_for('sports.toggle_enable_sport_by_id', sport_id=sport.id, current_page=sports.page) }}">
+                    Habilitar</a>
+                {% else %}
+                <a class="btn btn-bloquear"
+                    href="{{ url_for('sports.toggle_enable_sport_by_id', sport_id=sport.id, current_page=sports.page) }}"
+                    onclick="return confirm('¿Esta seguro? Si hay inscripciones en esta disciplina seran eliminadas')">
+                    Deshabilitar</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if email_has_permission(session["user"], "sports_destroy") %}
+                <a class="btn btn-eliminar"
+                    href="{{ url_for('sports.delete_sport_by_id', sport_id=sport.id, current_page=sports.page) }}"
+                    onclick="return confirm('¿Quiere eliminar la disciplina?')">Eliminar</a>
+            </td>
+            {% endif %}
+            {% if sport.enabled==True %}
+            <td>
+                <a id="boton-agregar-disciplina"
+                    href="{{ url_for('signups.signups_list_page',sport_id=sport.id , return_page=sports.page, associates_page=1) }}">Ver</a>
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>No hay disciplinas</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+<div class="paginacion">
+    <ul>
+        {% if sports.has_prev %}
+        <li>
+            {% if filters %}
+            <a href="{{ url_for(
+                     'sports.sport_index_page_filtered',
+                     num=sports.prev().page,
+                     name=filters.name,
+                     enabled=filters.enabled
+                     ) }}"><i class="fas fa-chevron-left"></i></a>
+            {% else %}
+            <a href="{{ url_for('sports.sport_index_page', num=sports.prev().page) }}"><i
+                    class="fas fa-chevron-left"></i></a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% for page_num in range(sports.pages) %}
+        {% if page_num + 1 > sports.page - 3 and page_num + 1 < sports.page + 3 %} {% if page_num + 1==sports.page %}
+            <li>
+            <a class="active">{{page_num + 1}}</a>
+            </li>
+            {% else %}
+            <li>
+                {% if filters %}
+                <a href="{{ url_for(
+                             'sports.sport_index_page_filtered',
+                             num=page_num + 1,
+                             name=filters.name,
+                             enabled=filters.enabled
+                             ) }}">{{page_num + 1}}</a>
+                {% else %}
+                <a href="{{ url_for('sports.sport_index_page', num=page_num + 1) }}">{{page_num + 1}}</a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if sports.has_next %}
+            <li>
+                {% if filters %}
+                <a href="{{ url_for('sports.sport_index_page_filtered',
+                             num=sports.next().page,
+                             name=filters.name,
+                             enabled=filters.enabled
+                             ) }}">
+                    {% else %}
+                    <a href="{{ url_for('sports.sport_index_page', num=sports.next().page) }}">
+                        {% endif %}
+                        <i class="fas fa-chevron-right"></i></a>
+            </li>
+            {% endif %}
+    </ul>
+</div>
+<div class="div-btn">
+    <a id="boton-agregar-disciplina" href="{{ url_for('sports.new_sport_form', current_page=sports.page) }}">Agregar
+        disciplina</a>
+</div>
+{% endblock %}

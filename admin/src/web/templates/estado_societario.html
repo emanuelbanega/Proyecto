@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% set active_page = "estado_societario" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/styles.css') }}">
+{% endblock %}
+{% block title %}
+<title>Estado Societario</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<h1>Estado Societario</h1>
+{% endblock %}

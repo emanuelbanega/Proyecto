@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/associates/edit_associated.css') }}">
+{% endblock %}
+{% block title %}
+<title>Editar Asociado</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h2>Actualizar Asociado</h2>
+    <form id="for-box"
+        action="{{ url_for('associates.update_associated', associated_id = associated.id, current_page = return_page)}}"
+        method="post">
+        <label class="labelNombre">Nombre:</label>
+        <input class="inputNombre" type="text" id="name" name="name" placeholder="Ingrese el nombre del asociado" {% if
+            params %} value="{{ params['name'].strip()  }}" {% endif %} autocomplete="off" required>
+        <label class="labelApellido">Apellido:</label>
+        <input class="inputApellido" type="text" id="surname" name="surname"
+            placeholder="Ingrese el apellido del asociado" {% if params %} value="{{ params['surname'].strip()  }}" {%
+            endif %} autocomplete="off" required>
+        <label class="labelGenero">Género:</label>
+        <div class="div-select">
+            <select class="selectGenero" name="gender" id="gender">
+                <option value="M">M</option>
+                <option value="F">F</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <label class="labelDire">Dirección:</label>
+        <input class="inputDire" type="text" id="direction" name="direction"
+            placeholder="Ingrese la dirección del asociado" {% if params %} value="{{ params['direction'].strip()  }}"
+            {% endif %} autocomplete="off" required>
+        <label class="labelTel">Teléfono:</label>
+        <input class="inputTel" type="text" id="phone" name="phone" placeholder="Ingrese el teléfono del asociado" {% if
+            params %} value="{{ params['phone'].strip()  }}" {% endif %} autocomplete="off">
+        <label class="labelEmail">Email:</label>
+        <input class="inputEmail" type="email" id="mail" name="mail" placeholder="Ingrese el email del asociado" {% if
+            params %} value="{{ params['email'].strip()  }}" {% endif %} autocomplete="off">
+        <input class="botonAgregar" type="submit" value="Actualizar asociado">
+        <a class="botonCancelar"
+            href="{{ url_for('associates.associated_index_page', num = return_page) }}">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

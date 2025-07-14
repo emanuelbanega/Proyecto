@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+{% set active_page = "payments" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Pagos</title>
+{% endblock %}
+
+{% block content %}
+
+<table class="tabla">
+    <caption>
+        <div class="div-titulo-buscar">
+            <h1 class="nom-pagina">Pagos:</h1>
+            <div class="div-buscar">
+                <form class="buscar" action="{{ url_for('payments.filtrar', current_page = payments.pages)}}"
+                    method="POST">
+                    <input class="buscar_num_asso" type="number" name="id" placeholder="# socio">
+                    <input class="buscar_apellido" name="surname" placeholder="Ingrese el apellido">
+                    <button class="boton-filtrar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th># Orden</th>
+            <th class="numSocio"># Socio</th>
+            <th class="nomAsso">Nombre y Apellido</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if payments.items %}
+        {% for payment in payments.items %}
+        <tr>
+            <td>{{ payment.orden }}</td>
+            <td class="numSocio">{{ payment.quotas[0].associated_id }}</td>
+            <td>{{ payment.quotas[0].associates.surname}}, {{ payment.quotas[0].associates.name }}</td>
+            <td>{{ payment.amount }}</td>
+            <td>{{ payment.date.strftime('%d-%m-%Y') }}</td>
+            <td><a class="btn btn-detalle"
+                    href="{{ url_for('payments.recibo',current_page=payments.page,payment_id=payment.id) }}">Ver
+                    detalle</a></td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td></td>
+        <td>Sin pagos</td>
+        <td></td>
+        <td></td>
+        {% endif %}
+    </tbody>
+</table>
+<div class="paginacion">
+    <ul>
+        {% if payments.has_prev %}
+        <li>
+            <a href="{{ url_for('payments.payment_index_page', num=payments.prev().page) }}"><i
+                    class="fas fa-chevron-left"></i></a>
+        </li>
+        {% endif %}
+        {% for page_num in range(payments.pages) %}
+        {% if page_num + 1 > payments.page - 3 and page_num + 1 < payments.page + 3 %} {% if page_num + 1==payments.page
+            %} <li>
+            <a class="active">{{page_num + 1}}</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{{ url_for('payments.payment_index_page', num=page_num + 1) }}">{{page_num + 1}}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if payments.has_next %}
+            <li>
+                <a href="{{ url_for('payments.payment_index_page', num=payments.next().page) }}">
+                    <i class="fas fa-chevron-right"></i></a>
+            </li>
+            {% endif %}
+    </ul>
+</div>
+
+<a class="btn-nuevo-pago" href="{{ url_for('payments.new_payment',current_page=payments.page)}}">Realizar Pago</a>
+<a class="btn-nuevo-pago" href="{{ url_for('payments.pending_payments',current_page=payments.page)}}">Pagos Pendientes</a>
+{% if email_has_permission(session["user"],"quota_generate") %}
+<a class="btn-act-quota" href="{{ url_for('quotas.quota_generate') }}">Actualizar cuotas</a>
+{% endif %}
+
+{% endblock %}

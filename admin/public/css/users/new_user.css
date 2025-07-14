@@ -1,0 +1,92 @@
+@import "../new.css";
+
+#for-box {
+    border: solid 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 3px 3px 10px black;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, auto);
+
+    grid-template-areas: "labelCorreo labelCorreo"
+        "inputCorreo inputCorreo"
+        "labelUserName labelPass"
+        "inputUserName inputPass"
+        "labelApellido labelNombre"
+        "inputApellido inputNombre"
+        "botonCancelar botonAgregar";
+}
+
+.labelCorreo {
+    grid-area: labelCorreo;
+}
+
+.labelUserName {
+    grid-area: labelUserName;
+}
+
+.inputCorreo {
+    grid-area: inputCorreo;
+}
+
+.inputUserName {
+    grid-area: inputUserName;
+}
+
+.labelPass {
+    grid-area: labelPass;
+}
+
+.labelNombre {
+    grid-area: labelNombre;
+}
+
+.inputPass {
+    grid-area: inputPass;
+}
+
+.inputNombre {
+    grid-area: inputNombre;
+}
+
+.labelApellido {
+    grid-area: labelApellido;
+}
+
+.inputApellido {
+    grid-area: inputApellido;
+}
+
+.botonAgregar {
+    grid-area: botonAgregar;
+}
+
+.botonCancelar {
+    grid-area: botonCancelar;
+}
+
+@media screen and (max-width: 928px) {
+    #for-box {
+        grid-gap: 10px;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(12, auto);
+
+        grid-template-areas: "labelCorreo"
+            "inputCorreo"
+            "labelUserName"
+            "inputUserName"
+            "labelPass"
+            "inputPass"
+            "labelApellido"
+            "inputApellido"
+            "labelNombre"
+            "inputNombre"
+            "botonAgregar"
+            "botonCancelar";
+        width: 100%;
+    }
+
+    #for-box input {
+        margin-bottom: 5px;
+    }
+
+}

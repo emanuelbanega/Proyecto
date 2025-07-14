@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+{% set active_page = "users" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/users/user_detail.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Detalle usuario</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+
+<div id="for-box">
+    <div class="cabecera h2DatosPersonales"><i class="fa-solid fa-database"></i>
+        <h2>Datos personales:</h2>
+    </div>
+    <div class="datoEmail">
+        <label class="labelEmail">Email: </label>
+        <label class="dato">{{user.email}}</label>
+    </div>
+    <div class="datoNombre">
+        <label class="labelNombre">Nombre: </label>
+        <label class="dato">{{user.first_name}}</label>
+    </div>
+    <div class="datoApellido">
+        <label class="labelApellido">Apellido: </label>
+        <label class="dato">{{user.last_name}}</label>
+    </div>
+
+    <div class="cabecera h2DatosCuenta"><i class="fa-solid fa-user-large"></i>
+        <h2>Datos de la cuenta:</h2>
+    </div>
+    <div class="datoUserName">
+        <label class="labelUsuario">Usuario: </label>
+        <label class="dato">{{user.userName}}</label>
+    </div>
+    <div class="datoEstado">
+        <label class="labelEstado">estado: </label>
+        <label class="dato">{% if user.active %}activo {% else %} bloqueado {% endif %}</label>
+    </div>
+
+    <div class="cabecera h2DatosRoles"><i class="fa-solid fa-screwdriver-wrench"></i>
+        <h3>Roles:</h3>
+    </div>
+    <div class="d6" id="form-roles" style="display: none;">
+        <form class="formAsigRole" action="{{ url_for('users.asig_role', user_id=user.id, current_page=return_page)}}"
+            method="POST">
+            <div>
+                <input type="checkbox" id="checkboxAdmin" {% if user_is_role(user, 'administrador' )%} checked="" {%
+                    endif %} name="administrador" value="administrador" />
+                <label class="dato">Administrador</label>
+            </div>
+            <div>
+                <input type="checkbox" id="checkboxOperador" {% if user_is_role(user, 'operador' )%} checked="" {% endif
+                    %} name="operador" value="operador" />
+                <label class="dato">Operador</label>
+            </div>
+            <div>
+                <input type="checkbox" id="checkboxSocio" {% if user_is_role(user, 'socio' )%} checked="" {% endif %}
+                    name="socio" value="socio" />
+                <label class="dato">Socio</label>
+            </div>
+            <input type="submit" value="actualizar roles">
+        </form>
+    </div>
+    <div id="roles-user" class="d6" style="display: block;">
+        {% if not user.role %}
+        <label class="dato sinRoles">sin asignar</label>
+        {% else %}
+        {% for rol in user.role %}
+        <label class="dato">{{ rol.name }}</label>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% if user_is_role(user, 'socio' ) %}
+    <div class="cabecera h2DatosAsociados"><i class="fa-solid fa-users"></i>
+        <h3>Asociado:</h3>
+    </div>
+    <div class="datoAsociados">
+        {% if not user.associated %}
+        <label class="dato ">Sin asociados</label>
+        {% else %}
+        <label class="dato d7">#Socio:
+            {{user.associated[0].id}} | {{user.associated[0].document_type}}:
+            {{user.associated[0].document_number}} | Nombre: {{user.associated[0].surname}}
+            {{user.associated[0].name}}</label>
+        {% endif %}
+    </div>
+    <div class="div-btn-asociado">
+        {% if user.associated %}
+        <a href="{{ url_for('users.remove_associate', user_id=user.id, current_page=return_page)}}"
+            class="btn btn-delete" id="btn-delete-asociado">eliminar</a>
+        {% endif %}
+    </div>
+
+
+    {% endif %}
+    <div class="linea"></div>
+    <div id="div-botones">
+        <a class="btn btn-modificar"
+            href="{{ url_for('users.update_user', user_id=user.id, current_page=return_page) }}">modificar</a>
+        <a class="btn btn-volver" href="{{ url_for('users.user_index', num=return_page) }}">volver</a>
+        <a class="btn btn-roles" id="btn-roles">asignar rol</a>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+    let showAsigRole = false
+
+    const btnAsigRole = document.getElementById("btn-roles");
+    const rolesUser = document.getElementById("roles-user");
+    const formRoles = document.getElementById("form-roles");
+
+    btnAsigRole.addEventListener('click', () => {
+        if (showAsigRole) {
+            rolesUser.style.display = "block";
+            formRoles.style.display = "none";
+            btnAsigRole.innerText = "asignar rol"
+        } else {
+            rolesUser.style.display = "none";
+            formRoles.style.display = "block";
+            btnAsigRole.innerText = "cancelar"
+        }
+        showAsigRole = !showAsigRole;
+    });
+
+</script>
+{% endblock %}

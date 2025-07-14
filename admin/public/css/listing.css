@@ -1,0 +1,166 @@
+@import "styles.css";
+
+
+.content {
+    height: 100%;
+    overflow-x: auto;
+    margin: 0 10px;
+}
+
+.nom-pagina {
+    color: #fff;
+    font-size: 35px;
+    font-family: auto;
+    text-align: initial;
+}
+
+.div-titulo-buscar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: initial;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-buscar {
+    display: flex;
+    text-align: end;
+    justify-content: end;
+}
+
+.tabla {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    border-color: #dee2e6;
+    color: #fff;
+    background-color: #00000036;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 3px 3px 10px black;
+}
+
+thead {
+    background: rgba(103, 232, 11, 0.4);
+}
+
+tr {
+    text-align: justify;
+}
+
+th {
+    padding: .5rem .5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+td {
+    padding: .5rem .5rem;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+}
+
+
+tbody tr:hover {
+    background: rgba(243, 103, 199, 0.4);
+}
+
+.btn {
+    border: 3px solid rgba(100, 100, 100, 0.1);
+    padding: 8px;
+    font-size: 14px;
+    font-family: 'poppins', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    background-size: 300%;
+    text-decoration: none;
+    transition: 0.6s;
+}
+
+.btn:hover {
+    background-position: right;
+
+}
+
+.btn-detalle {
+    background-image: linear-gradient(to left, #00b7da, #161569, #00b7da);
+}
+
+.btn-eliminar {
+    background-image: linear-gradient(to left, #cc1452, #203a54, #cc1452);
+}
+
+.btn-bloquear {
+    background-image: linear-gradient(to left, #da1200, #e3da2c, #da1200);
+}
+
+.btn-desbloquear {
+    background-image: linear-gradient(to left, #16da00bd, #c6bd1c, #16da00);
+}
+
+.btn-credential {
+    background-image: linear-gradient(to left, #d8ca0abd, #a18012, #d8ca0abd);
+}
+
+.paginacion {
+    margin: 20px 0;
+    font-size: 10px;
+}
+
+.paginacion ul {
+    list-style: none;
+    text-align: center;
+}
+
+.paginacion ul li {
+    display: inline-block;
+    margin-right: 10px;
+    user-select: none;
+}
+
+.paginacion ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background: #024959;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+
+}
+
+.paginacion ul li a:hover {
+    background: #037e8c;
+    transition: 0.5s;
+}
+
+.paginacion ul li .active {
+    background: #037e8c;
+    font-weight: bold;
+}
+
+.paginacion ul li .threePoints:hover {
+    background: #024959;
+    cursor: initial;
+}
+
+.buscar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(188 173 147);
+    height: 40px;
+    border-radius: 40px;
+    padding: 1px 10px;
+}
+
+.div-btn {
+    display: flex;
+    justify-content: center;
+}
+
+tr {
+    text-align: center;
+    white-space: nowrap;
+}

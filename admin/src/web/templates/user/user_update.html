@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% set active_page = "users" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/users/user_update.css') }}">
+{% endblock %}
+{% block title %}
+<title>Actualizar usuario</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h2>Actualizar Usuario</h2>
+    <form id="for-box" action="/usuarios/modificar_usuario/{{user.id}}/{{current_page}}" method="post">
+        <label class="labelUserName">Nombre de usuario:</label>
+        <input class="inputUserName" type="text" id="userName" name="userName" maxlength="50"
+            placeholder="Ingrese el nombre de usuario" {% if user %} value="{{ user.userName  }}" {% endif %}
+            autocomplete="off" required>
+        <label class="labelPass">nueva contraseña:</label>
+        <input class="inputPass" type="password" id="new-user-pass" name="password" placeholder="Ingrese una contraseña"
+            maxlength="30">
+        <label class="labelConfirm">confirmación:</label>
+        <input class="inputConfirm" type="password" id="new-user-pass" name="confirmacion"
+            placeholder="confirme la contraseña" maxlength="30">
+        <label class="labelApellido">Apellido:</label>
+        <input class="inputApellido" type="text" id="new-user-last-name" name="last_name" maxlength="100"
+            placeholder="Ingrese el apellido" {% if user %} value="{{ user.last_name.strip()  }}" {% endif %} required>
+        <label class="labelNombre">Nombre:</label>
+        <input class="inputNombre" type="text" id="new-user-first-name" name="first_name" maxlength="100"
+            placeholder="Ingrese el nombre" {% if user %} value="{{ user.first_name.strip()  }}" {% endif %} required>
+        <input class="botonAgregar" type="submit" value="Actualizar Usuario">
+        <a class="botonCancelar"
+            href="{{ url_for('users.user_detail', user_id=user.id, current_page=current_page) }}">cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

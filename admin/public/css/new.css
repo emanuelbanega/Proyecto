@@ -1,0 +1,98 @@
+@import "styles.css";
+
+.content {
+    height: 100%;
+    overflow-x: auto;
+    margin: 0 10px;
+}
+
+#for-box {
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #00000073;
+    color: #fff;
+
+    display: grid;
+    grid-gap: 20px;
+}
+
+h2 {
+    color: #fff;
+    margin-top: 20px;
+}
+
+#for-box label {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+
+
+input::placeholder {
+    color: rgba(240, 248, 255, 0.66);
+}
+
+#for-box input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#for-box input {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+}
+
+#for-box input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: green;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid #17ac17;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#for-box input[type="submit"]:hover {
+    background: #17ac17;
+}
+
+#for-box input:hover,
+#for-box input:focus {
+    background: #83828273
+}
+
+#for-box .botonCancelar {
+    text-decoration: none;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: rgb(182 40 15);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid rgb(230 98 75);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    transition: .3s;
+}
+
+#for-box .botonCancelar:hover {
+    background: rgb(230 98 75);
+}
+
+.flash p {
+    color: #dee2e6;
+}

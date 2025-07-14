@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% set active_page = "pagos" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block title %}
+<title>Nuevo Pago</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<form class="new-payment" action="{{ url_for('payments.filtrar_quotas',current_page=return_page)}}" method="POST">
+    <label for="selectAsociado">Seleccione un asociado</label>
+    <select name="selectAsociado" id="selectAsociado">
+        {% for a in associates %}
+        {% if selected == a.id %}
+        <option selected value="{{a.id}}">{{a.name}},{{a.surname}} #{{a.id}}</option>
+        {% else %}
+        <option value="{{a.id}}">{{a.name}},{{a.surname}} #{{a.id}}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <button type="submit">Buscar</button>
+</form>
+
+<br>
+
+{% if selected %}
+{% if quotas %}
+<ul class="quotas-list">
+    {% for q in quotas %}
+    <li>
+        <p>Fecha: {{q.end_date.strftime('%d-%m-%Y')}}, Monto:{{q.final_amount}}</p><a
+            href="{{ url_for('payments.pagar_post', current_page=return_page, quotaId=q.id) }}">Pagar</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<h1 style="margin-left: 20px;margin-bottom: 20px;color: white;">No tiene cuotas pendientes</h1>
+{% endif %}
+{% endif %}
+
+
+<a class="btn-nuevo-pago" style="margin-left: 20px;"
+    href="{{ url_for('payments.payment_index_page', num=return_page) }}">Volver</a>
+
+{% endblock %}

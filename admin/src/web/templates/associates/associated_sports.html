@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sports/sports.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Disciplinas</title>
+{% endblock %}
+
+{% block content %}
+
+<table class="tabla">
+    <caption>
+        <h1 class="nom-pagina">Lista de disciplinas:</h1>
+    </caption>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categorias</th>
+            <th>Instructores</th>
+            <th>Horarios</th>
+            <th>Costo mensual</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if sports %}
+        {% for sport in sports %}
+        <tr>
+            <td>{{ sport.name }}</td>
+            <td>{{ sport.division }}</td>
+            <td>{{ sport.instructors_names }}</td>
+            <td>{{ sport.schedule }}</td>
+            <td>{{ sport.monthly_fee }} {{ currency }}</th>
+            <td>
+                <a class="btn btn-eliminar"
+                    href="{{ url_for('associates.delete_signup', sport_id=sport.id, associate_id=associated_id, return_page=current_page) }}"
+                    onclick="return confirm('¿Quiere eliminar la inscripcion?')">Borrar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td>No hay disciplinas</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

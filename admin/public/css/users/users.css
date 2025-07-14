@@ -1,0 +1,145 @@
+@import "../listing.css";
+
+.select-estado {
+    border: none;
+    color: white;
+    background-color: rgb(188 173 147);
+    font-weight: 700;
+    width: 0;
+    text-transform: uppercase;
+    transition: 2s;
+}
+
+.buscar_email {
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    float: left;
+    line-height: 30px;
+    transition: .3s;
+    width: 0;
+    text-align: center;
+    transition: 2s;
+}
+
+.buscar_email::placeholder {
+    color: rgba(0, 0, 0, 0.717);
+}
+
+.boton-filtrar {
+    color: white;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#boton-agregar-usuario {
+    background: #0b65a1;
+    color: white;
+    line-height: 30px;
+    border-radius: 20px;
+    padding: 2px 17px;
+    text-decoration: none;
+    transition: .6s;
+}
+
+#boton-agregar-usuario:hover {
+    background: #0e2f45;
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1020px) {
+    .user-username {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .user-email {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 707px) {
+    .user-estate {
+        display: none;
+    }
+}
+
+
+@media screen and (min-width:300px) and (max-width:480px) {
+
+    .nom-pagina {
+        font-size: 30px;
+    }
+
+    .buscar {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .buscar:hover>.buscar_email {
+        width: 200px;
+        font-size: 15px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+        font-size: 10px;
+    }
+
+    .buscar_email:focus {
+        width: 200px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width:480px) {
+
+    .buscar:hover>.buscar_email {
+        width: 200px;
+        transition: 1.4s;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 200px;
+    }
+}
+
+@media screen and (min-width:768px) {
+
+    .buscar:hover>.buscar_email {
+        width: 250px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width:1024px) {
+
+    .buscar:hover>.buscar_email {
+        width: 340px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 340px;
+    }
+}

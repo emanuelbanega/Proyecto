@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/associates/new_associated.css') }}">
+{% endblock %}
+{% block title %}
+<title>Detalle Asociado</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="div-form">
+    <h2>Nuevo Asociado</h2>
+    <form id="for-box" action="{{ url_for('associates.add_associated', current_page=return_page)}}" method="post">
+        <label class="labelNombre">Nombre:</label>
+        <input class="inputNombre" type="text" id="name" name="name" placeholder="Ingrese el nombre" {% if params %}
+            value="{{ params['name'].strip()  }}" {% endif %} autocomplete="off" required>
+        <label class="labelApellido">Apellido:</label>
+        <input class="inputApellido" type="text" id="surname" name="surname" placeholder="Ingrese el apellido" {% if
+            params %} value="{{ params['surname'].strip()  }}" {% endif %} autocomplete="off" required>
+        <label class="labelTipoDoc">Tipo de documento:</label>
+        <div class="div-select">
+            <select class="selectTipoDoc" name="document_type" id="document_type">
+                <option value="DNI">DNI</option>
+                <option value="LE">LE</option>
+                <option value="LC">LC</option>
+            </select>
+        </div>
+        <label class="labelDoc">Numero de documento:</label>
+        <input class="inputDoc" type="text" id="document_number" name="document_number"
+            placeholder="Ingrese el documento" {% if params %} value="{{ params['document_number'].strip()  }}" {% endif
+            %} autocomplete="off" required>
+        <label class="labelGenero">Género:</label>
+        <div class="div-select">
+            <select class="selectGenero" name="gender" id="gender">
+                <option value="M">M</option>
+                <option value="F">F</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <label class="labelDire">Dirección:</label>
+        <input class="inputDire" type="text" id="direction" name="direction" placeholder="Ingrese la dirección" {% if
+            params %} value="{{ params['direction'].strip()  }}" {% endif %} autocomplete="off" required>
+        <label class="labelEstado">Estado:</label>
+        <div class="div-select">
+            <select class="selectEstado" name="condition" id="condition">
+                <option value="Activo">Activo</option>
+                <option value="No-activo">no-activo</option>
+            </select>
+        </div>
+        <label class="labelTel">Teléfono:</label>
+        <input class="inputTel" type="text" id="phone" name="phone" placeholder="Ingrese el teléfono" {% if params %}
+            value="{{ params['phone'].strip()  }}" {% endif %} autocomplete="off">
+        <label class="labelEmail">Email:</label>
+        <input class="inputEmail" type="email" id="mail" name="mail" placeholder="Ingrese el email" {% if params %}
+            value="{{ params['email'].strip()  }}" {% endif %} autocomplete="off">
+        <input class="botonAgregar" type="submit" value="Agregar asociado">
+        <a class="botonCancelar" href="{{ url_for('associates.associated_index_page', num=return_page) }}">Cancelar</a>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% set active_page = "pagos" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block title %}
+<title>Pagos Pendientes</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+{% if pending_payments %}
+    <ul class="quotas-list">
+        {% for p in pending_payments %}
+        <li>
+            <p>Nro Orden: {{p.orden}}, Monto:{{p.amount}}</p>
+            <div id="image{{p.orden}}" style="display: none;" class="voucher_view">
+                <img src="{{ 'https://admin-grupo17.proyecto2022.linti.unlp.edu.ar/public/images/payments/' + p.voucher_image  }}" alt="comprobante">
+                <button onclick="hideVoucher('{{p.orden}}')">Cerrar</button>
+            </div>
+            <button id="{{p.orden}}" onclick="showVoucher('{{p.orden}}')">Ver Comprobante</button>
+            <form action="{{ url_for('payments.aprobar_pago',current_page=return_page,pagoId=p.id) }}" method="POST">
+                <button type="submit">Aprobar pago</button>
+            </form>
+            <form action="{{ url_for('payments.rechazar_pago',current_page=return_page,pagoId=p.id) }}" method="POST">
+                <button type="submit">Rechazar pago</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if empty %}
+    <h1 style="margin-left: 20px;margin-bottom: 20px;color: white;">No hay pagos pendientes</h1>
+{% endif %}
+
+<a class="btn-nuevo-pago" style="margin-left: 20px;"
+    href="{{ url_for('payments.payment_index_page', num=return_page) }}">Volver</a>
+
+<script>
+    function showVoucher(id){
+        const image = document.getElementById(`image${id}`)
+        image.style.display = "block"
+    }
+    function hideVoucher(id){
+        const image = document.getElementById(`image${id}`)
+        image.style.display = "none"
+    }
+</script>
+
+{% endblock %}

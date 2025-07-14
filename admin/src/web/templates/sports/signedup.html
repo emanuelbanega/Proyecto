@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+{% set active_page = "sports" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sports/sports.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Inscriptos</title>
+{% endblock %}
+
+{% block content %}
+
+
+
+<table class="tabla">
+    <caption>
+        <h1 class="nom-pagina">Inscriptos</h1>
+    </caption>
+    <thead>
+        <tr>
+            <th># socio</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tipo de documento</th>
+            <th>Numero de documento</th>
+            <th>Genero</th>
+            <th>Direccion</th>
+            <th>Estado</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Fecha de alta</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if associates %}
+        {% for associated in associates.items %}
+        <td>{{ associated.id }}</td>
+        <td>{{ associated.name }}</td>
+        <td>{{ associated.surname }}</td>
+        <td>{{ associated.document_type }}</td>
+        <td>{{ associated.document_number }}</td>
+        <td>{{ associated.gender }}</td>
+        <td>{{ associated.direction }}</td>
+        <td>{{ associated.condition }}</td>
+        {% if associated.phone %}
+        <td>{{ associated.phone }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if associated.mail %}
+        <td>{{ associated.mail }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        <td>{{ associated.discharge_date.strftime('%d-%m-%Y') }}</td>
+        <td>
+            <a class="btn btn-eliminar"
+                href="{{ url_for('signups.delete_signup', sport_id=sport_id, associate_id=associated.id, return_page=return_page) }}"
+                onclick="return confirm('¿Eliminar la inscripcion?')">Eliminar</a>
+        </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Sin Inscriptos</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        {% endif %}
+    </tbody>
+</table>
+
+<div class="paginacion">
+    <ul>
+        {% if associates.has_prev %}
+        <li>
+            <a
+                href="{{ url_for('signups.signups_list_page', sport_id=sport_id, return_page=return_page, associates_page=associates.prev().page) }}"><i
+                    class="fas fa-chevron-left"></i></a>
+        </li>
+        {% endif %}
+        {% for page_num in range(associates.pages) %}
+        {% if page_num + 1 > associates.page - 3 and page_num + 1 < associates.page + 3 %} {% if page_num +
+            1==associates.page %} <li>
+            <a class="active">{{page_num + 1}}</a>
+            </li>
+            {% else %}
+            <li>
+                <a
+                    href="{{ url_for('signups.signups_list_page', sport_id=sport_id, return_page=return_page, associates_page=page_num + 1) }}">{{page_num
+                    + 1}}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if associates.has_next %}
+            <li>
+                <a
+                    href="{{ url_for('signups.signups_list_page', sport_id=sport_id, return_page=return_page, associates_page=associates.next().page) }}">
+                    <i class="fas fa-chevron-right"></i></a>
+            </li>
+            {% endif %}
+    </ul>
+</div>
+
+<div class="div-btn">
+    <a id="boton-agregar-disciplina"
+        href="{{ url_for('signups.sign_associate_form', sport_id=sport_id, return_page=return_page, associates_page=associates_page, sign_page=1) }}">Inscribir</a>
+
+    <a class="botonCancelar" href="{{ url_for('sports.sport_index_page', num=return_page) }}">Volver</a>
+</div>
+
+
+{% endblock %}

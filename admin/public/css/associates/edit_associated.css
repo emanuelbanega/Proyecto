@@ -1,0 +1,41 @@
+@import "new_associated.css";
+
+#for-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, auto);
+
+    grid-template-areas: "labelNombre labelApellido"
+        "inputNombre inputApellido"
+        "labelGenero labelDire"
+        "selectGenero inputDire"
+        "labelTel labelEmail"
+        "inputTel inputEmail"
+        "botonCancelar botonAgregar";
+}
+
+
+@media screen and (max-width: 928px) {
+    #for-box {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(14, auto);
+
+        grid-template-areas:
+            "labelNombre"
+            "inputNombre"
+            "labelApellido"
+            "inputApellido"
+            "labelGenero"
+            "selectGenero"
+            "labelDire"
+            "inputDire"
+            "labelTel"
+            "inputTel"
+            "labelEmail"
+            "inputEmail"
+            "botonAgregar"
+            "botonCancelar";
+        width: 100%;
+    }
+
+}

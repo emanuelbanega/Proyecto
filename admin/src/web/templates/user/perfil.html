@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+{% set active_page = "perfil" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/perfil.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Perfil</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="contenedor_perfil">
+    <h1 class="nom-pagina">Perfil</h1>
+    <div class="contenedor_acerca_de_mi">
+        <h4 class="titulo_acerca_mi">Acerca de mí {% if editDescription == False %}<a id="btn-edit"
+                title="Editar descripción usuario" href="{{ url_for('perfil.edit_description') }}"><i
+                    class="fa-solid fa-pen-to-square"></i></a> {% endif %}</h4>
+        {% if editDescription %}
+        <form class="form-des" action="{{url_for('perfil.edit_description')}}" method="post">
+            <!-- <input placeholder="Cuéntanos sobre ti" type="text" name="archivo" required> -->
+            <textarea name="texDes" rows="10" cols="50" required
+                placeholder="Cuéntanos sobre ti">{% if user.description != '-' %}{{ user.description }}{% endif%}</textarea><br>
+            <input type="submit" value="Actualizar"></input>
+        </form>
+        <a class="btn-volver" title="cancelar" href="{{ url_for('perfil.perfil') }}">Cancelar</a>
+        {% else %}
+        <p class="parrafo_acerca_mi">{{ user.description }}</p>
+        {% endif %}
+    </div>
+    <div class="contenedor_img_user">
+        <div style="text-align: center;">
+            <img class="img_user"
+                src="{{ 'https://admin-grupo17.proyecto2022.linti.unlp.edu.ar/public/images/users/' + user.photo }}"
+                alt="foto de usuario" data-image-width="700" data-image-height="700">
+            <h4>Cambiar foto de perfil {% if editImg == False %}<a id="btn-edit" title="Actualizar foto de perfil"
+                    href="{{ url_for('perfil.change_photo') }}"><i class="fa-solid fa-pen-to-square"></i></a> {% endif
+                %}
+            </h4>
+            {% if editImg %}
+            <form class="form-img" action="{{ url_for('perfil.change_photo') }}" method="post" autocomplete="off"
+                enctype="multipart/form-data">
+                <input title="file" placeholder="subir una foto" type="file" name="archivo" required
+                    accept=".png, .jpg, .jpeg">
+                <input type="submit"></input>
+            </form>
+            <a class="btn-volver" title="cancelar" href="{{ url_for('perfil.perfil') }}">Cancelar</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="contenedor_detalles">
+        <p class="parrafo_detalles">
+            <span style="font-weight: 700;">Nombre: </span>
+            <br>{{ user.first_name }} {{ user.last_name}}<br>
+            <span style="font-weight: 700;">Nombre de Usuario: </span>
+            <br>{{ user.userName }}<br>
+            <span style="font-weight: 700;">Email: </span>
+            <br>{{ user.email }}<br>
+            <span style="font-weight: 700;">
+                <br>Location:
+            </span>
+            <br>La Plata - Buenos Aires - Argentina
+        </p>
+    </div>
+</div>
+{% endblock %}

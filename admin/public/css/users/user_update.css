@@ -1,0 +1,84 @@
+@import "../new.css";
+
+#for-box {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, auto);
+
+    grid-template-areas: "labelUserName inputUserName"
+        "labelPass labelConfirm"
+        "inputPass inputConfirm"
+        "labelApellido labelNombre"
+        "inputApellido inputNombre"
+        "botonCancelar botonAgregar";
+}
+
+.labelUserName {
+    grid-area: labelUserName;
+}
+
+.inputUserName {
+    grid-area: inputUserName;
+}
+
+.labelPass {
+    grid-area: labelPass;
+}
+
+.labelNombre {
+    grid-area: labelNombre;
+}
+
+.inputPass {
+    grid-area: inputPass;
+}
+
+.inputNombre {
+    grid-area: inputNombre;
+}
+
+.labelApellido {
+    grid-area: labelApellido;
+}
+
+.inputApellido {
+    grid-area: inputApellido;
+}
+
+.labelConfirm {
+    grid-area: labelConfirm;
+}
+
+.inputConfirm {
+    grid-area: inputConfirm;
+}
+
+.botonAgregar {
+    grid-area: botonAgregar;
+}
+
+.botonCancelar {
+    grid-area: botonCancelar;
+}
+
+@media screen and (max-width: 928px) {
+    #for-box {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(12, auto);
+
+        grid-template-areas:
+            "labelUserName"
+            "inputUserName"
+            "labelPass"
+            "inputPass"
+            "labelConfirm"
+            "inputConfirm"
+            "labelApellido"
+            "inputApellido"
+            "labelNombre"
+            "inputNombre"
+            "botonAgregar"
+            "botonCancelar";
+        width: 100%;
+    }
+
+}

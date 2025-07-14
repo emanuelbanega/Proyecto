@@ -1,0 +1,168 @@
+@import "../listing.css";
+
+
+.select-estado {
+    border: none;
+    color: white;
+    background-color: rgb(188 173 147);
+    font-weight: 700;
+    width: 0;
+    text-transform: uppercase;
+}
+
+.buscar_email {
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    float: left;
+    line-height: 30px;
+    transition: .3s;
+    width: 0;
+    text-align: center;
+}
+
+.buscar_email::placeholder {
+    color: rgba(0, 0, 0, 0.717);
+}
+
+.boton-filtrar {
+    color: white;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.div-btn-columna {
+    display: inline-grid;
+}
+
+#boton-agregar-asociado {
+    background: #0b65a1;
+    color: white;
+    line-height: 30px;
+    border-radius: 20px;
+    padding: 7px 17px;
+    text-decoration: none;
+    transition: .6s;
+}
+
+#boton-agregar-asociado:hover {
+    background: #0e2f45;
+}
+
+#pdfExport {
+    text-decoration: none;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: rgb(182 40 15);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid rgb(230 98 75);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    transition: .3s;
+}
+
+#pdfExport:hover {
+    background: rgb(230 98 75);
+}
+
+#csvExport {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: green;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid #17ac17;
+    padding: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#csvExport:hover {
+    background: #17ac17;
+}
+
+/* RESPONSIVE */
+
+@media screen and (min-width:300px) and (max-width:480px) {
+
+    .nom-pagina {
+        font-size: 30px;
+    }
+
+    .buscar {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .buscar:hover>.buscar_email {
+        width: 200px;
+        font-size: 15px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+        font-size: 10px;
+    }
+
+    .buscar_email:focus {
+        width: 200px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width:480px) {
+
+    .buscar:hover>.buscar_email {
+        width: 200px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 200px;
+    }
+}
+
+@media screen and (min-width:768px) {
+
+    .buscar:hover>.buscar_email {
+        width: 250px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width:1024px) {
+
+    .buscar:hover>.buscar_email {
+        width: 340px;
+    }
+
+    .buscar:hover>.select-estado {
+        width: auto;
+    }
+
+    .buscar_email:focus {
+        width: 340px;
+    }
+}

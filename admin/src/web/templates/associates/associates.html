@@ -1,0 +1,275 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/associates/associates.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock%}
+{% block title %}
+<title>Asociados</title>
+{% endblock %}
+
+{% block content %}
+
+<table id="tableAsociated" class="tabla">
+    <caption>
+        <div class="div-titulo-buscar">
+            <h1 class="nom-pagina">Listado de asociados:</h1>
+            <div class="div-buscar">
+                <form class="buscar" action="{{ url_for('associates.filtrar')}}" method="POST">
+                    <select class="select-estado" name="estado">
+                        <option value="all">Estado</option>
+                        <option value="activo">Activo</option>
+                        <option value="bloqueado">No-activo</option>
+                    </select>
+                    <input class="buscar_email" name="surname" placeholder="Ingrese el apellido">
+                    <button class="boton-filtrar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th># socio</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th># documento</th>
+            <th>Tipo</th>
+            <th>Género</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Fecha de alta</th>
+            <th>Editar</th>
+            <th>Bloquear</th>
+            <th>Eliminar</th>
+            <th>Carnet</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for associated in associates.items %}
+        <td>{{ associated.id }}</td>
+        <td>{{ associated.name }}</td>
+        <td>{{ associated.surname }}</td>
+        <td>{{ associated.document_number }}</td>
+        <td>{{ associated.document_type }}</td>
+        <td>{{ associated.gender }}</td>
+        <td>{{ associated.direction }}</td>
+        <td>{{ associated.condition }}</td>
+        {% if associated.phone %}
+        <td>{{ associated.phone }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if associated.mail %}
+        <td>{{ associated.mail }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        <td>{{ associated.discharge_date.strftime('%d-%m-%Y') }}</td>
+        <td>
+            <a class="btn btn-detalle"
+                href="{{ url_for('associates.associated_detail', associated_id=associated.id, current_page = associates.page) }}">Detalle</a>
+        </td>
+        <td>
+            {% if associated.condition == "Activo" %}
+            <a class="btn btn-bloquear"
+                href="{{ url_for('associates.toggle_enable_associated_by_id', associated_id = associated.id, current_page = associates.page) }}"
+                onclick="return confirm('¿Esta seguro? Si hay inscripciones en este asociado seran eliminadas')">
+                Deshabilitar</a>
+            {% else %}
+            <a class="btn btn-bloquear"
+                href="{{ url_for('associates.toggle_enable_associated_by_id', associated_id = associated.id, current_page = associates.page) }}">
+                Habilitar</a>
+            {% endif %}
+            </a>
+        </td>
+        <td>
+            <a class="btn btn-eliminar"
+                href="{{ url_for('associates.delete_associated_by_id', associated_id=associated.id, current_page = associates.page) }}"
+                onclick="return confirm('¿Quiere eliminar el asociado?')">Eliminar</a>
+        </td>
+        <td>
+            {% if associated.credential %}
+            <a class="btn btn-credential"
+                href="{{ url_for('associates.associated_license', associated_id = associated.id, current_page = associates.page) }}">
+                Ver Carnet</a>
+            {% else %}
+            <a class="btn btn-credential"
+                href="{{ url_for('associates.new_credential_form', associated_id = associated.id, current_page = associates.page) }}">
+                Generar Carnet </a>
+            {% endif %}
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table id="tablePdf" class="tabla-asociados" style="display: none;color: white;">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tipo de documento</th>
+            <th>Numero de documento</th>
+            <th>Género</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Fecha de alta</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if associates.items %}
+        {% for associated in associates.items %}
+        <tr>
+            <td>{{ associated.name }}</td>
+            <td>{{ associated.surname }}</td>
+            <td>{{ associated.document_type }}</td>
+            <td>{{ associated.document_number }}</td>
+            <td>{{ associated.gender }}</td>
+            <td>{{ associated.direction }}</td>
+            <td>{{ associated.condition }}</td>
+            <td>{{ associated.phone }}</td>
+            <td>{{ associated.mail }}</td>
+            <td>{{ associated.discharge_date.strftime('%d-%m-%Y') }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>No hay asociados</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<div class="paginacion">
+    <ul>
+        {% if associates.has_prev %}
+        <li>
+            <a {% if filterState[0] %} {% if filterState[1]=="apellido" %}
+                href="{{ url_for('associates.filtrarApellido', surname = filterState[2], num = associates.prev().page) }}"
+                {% elif filterState[1]=="estado" %}
+                href="{{ url_for('associates.filtrarEstado', estado = filterState[3], num = associates.prev().page) }}"
+                {% else %}
+                href="{{ url_for('associates.filtrarApellidoEstado', estado = filterState[3], surname = filterState[2], num = associates.prev().page) }}"
+                {% endif %} {% else %}
+                href="{{ url_for('associates.associated_index_page', num=associates.prev().page) }}" {% endif %}><i
+                    class="fas fa-chevron-left"></i></a>
+        </li>
+        {% endif %}
+        {% for page_num in range(associates.pages) %}
+        {% if page_num + 1 > associates.page - 3 and page_num + 1 < associates.page + 3 %} {% if page_num +
+            1==associates.page %} <li>
+            <a class="active">{{page_num + 1}}</a>
+            </li>
+            {% else %}
+            <li>
+                <a {% if filterState[0] %} {% if filterState[1]=="apellido" %}
+                    href="{{ url_for('associates.filtrarApellido', surname = filterState[2], num = page_num + 1) }}" {%
+                    elif filterState[1]=="estado" %}
+                    href="{{ url_for('associates.filtrarEstado', estado = filterState[3], num = page_num + 1) }}" {%
+                    else %}
+                    href="{{ url_for('associates.filtrarApellidoEstado', estado = filterState[3], surname = filterState[2], num = page_num + 1) }}"
+                    {% endif %} {% else %} href="{{ url_for('associates.associated_index_page', num = page_num + 1) }}"
+                    {% endif %}>
+                    {{page_num + 1}}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if associates.has_next %}
+            <li>
+                <a {% if filterState[0] %} {% if filterState[1]=="apellido" %}
+                    href="{{ url_for('associates.filtrarApellido', surname = filterState[2], num = associates.next().page) }}"
+                    {% elif filterState[1]=="estado" %}
+                    href="{{ url_for('associates.filtrarEstado', estado = filterState[3], num = associates.next().page) }}"
+                    {% else %}
+                    href="{{ url_for('associates.filtrarApellidoEstado', estado = filterState[3], surname = filterState[2], num = associates.next().page) }}"
+                    {% endif %} {% else %}
+                    href="{{ url_for('associates.associated_index_page', num = associates.next().page) }}" {% endif %}>
+                    <i class="fas fa-chevron-right"></i></a>
+            </li>
+            {% endif %}
+    </ul>
+</div>
+<div class="div-btn">
+    <div class="div-btn-columna">
+        <a id=boton-agregar-asociado
+            href="{{ url_for('associates.new_associated_form', current_page = associates.page) }}">Agregar Asociado</a>
+        <button id="pdfExport" onclick="javascript:exportPDF();">Export PDF</button>
+        <button id="csvExport" onclick="javascript:exportCSV();">Export CSV</button>
+    </div>
+</div>
+
+<script src="{{ url_for('static',filename='js/TableCSVExporter.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+<script>
+    function exportPDF() {
+
+        const table = document.getElementById('tableAsociated');
+        const tablePdf = document.getElementById('tablePdf');
+
+        table.style.display = "none";
+        tablePdf.style.display = "block";
+
+        html2canvas(tablePdf, {
+            onrendered: function (canvasObj) {
+                var pdf = new jsPDF({
+                    orientation: "landscape",
+                    unit: "in",
+                    format: [16, 9]
+                }),
+                    pdfConf = {
+                        pagesplit: false,
+                        backgroundColor: '#FFF'
+                    };
+                document.body.appendChild(canvasObj); //appendChild is required for html to add page in pdf
+                pdf.addHTML(canvasObj, 0, 0, pdfConf, function () {
+                    document.body.removeChild(canvasObj);
+                    //pdf.addPage();
+                    table.style.display = "block";
+                    tablePdf.style.display = "none";
+                    pdf.save('asociados.pdf');
+                    window.location.reload()
+                });
+            }
+        });
+    }
+
+    function exportCSV() {
+        const dataTable = document.getElementById('tablePdf');
+
+        const exporter = new TableCSVExporter(dataTable);
+        const csvOutput = exporter.convertToCSV();
+        const csvBlob = new Blob([csvOutput], { type: "text/csv" });
+        const blobUrl = URL.createObjectURL(csvBlob);
+        const anchorElement = document.createElement("a");
+
+        anchorElement.href = blobUrl;
+        anchorElement.download = "asociados.csv";
+        anchorElement.click();
+
+        setTimeout(() => {
+            URL.revokeObjectURL(blobUrl);
+        }, 500);
+    }
+
+</script>
+
+{% endblock %}

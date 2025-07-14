@@ -1,0 +1,278 @@
+@import "users/users.css";
+
+th,
+td {
+    white-space: nowrap;
+}
+
+tr {
+    text-align: center;
+}
+
+.buscar_apellido,
+.buscar_num_asso {
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    float: left;
+    line-height: 30px;
+    transition: .3s;
+    width: 0;
+    text-align: center;
+}
+
+.buscar_apellido::placeholder,
+.buscar_num_asso::placeholder {
+    color: rgba(0, 0, 0, 0.717);
+}
+
+.div-btn .btn-volver {
+    background: rgb(207, 44, 15);
+}
+
+.div-btn .btn-volver:hover {
+    background: rgb(139, 27, 8);
+}
+
+.btn {
+    border: 3px solid rgba(100, 100, 100, 0.1);
+    padding: 8px;
+    font-size: 14px;
+    font-family: 'poppins', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    background-size: 300%;
+    text-decoration: none;
+    transition: 0.6s;
+}
+
+.btn:hover {
+    background-position: right;
+
+}
+
+.btn-detalle {
+    background-image: linear-gradient(to left, #00b7da, #161569, #00b7da);
+}
+
+.btn-volver {
+    border: 3px solid rgba(100, 100, 100, 0.1);
+    padding: 10px;
+    font-size: 14px;
+    font-family: 'poppins', sans-serif;
+    /* border-radius: 5px; */
+    cursor: pointer;
+    color: #fff;
+    background-size: 300%;
+    text-decoration: none;
+    transition: 0.6s;
+    background-color: rgb(31, 109, 227);
+}
+
+.btn-act-quota {
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid black;
+    background-color: cadetblue;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 10px;
+    text-decoration: none;
+    transition: .5s;
+}
+
+.btn-act-quota:hover {
+    background-color: rgb(15, 80, 82);
+}
+
+.new-payment {
+    color: white;
+    margin: 20px;
+}
+
+.new-payment button {
+    padding: 5px;
+    border: 0.5px solid black;
+    border-radius: 5px;
+    color: whitesmoke;
+    background-color: rgb(27, 86, 248);
+}
+
+.quotas-list {
+    margin-left: 30px;
+    color: white;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.quotas-list li {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    background-color: rgb(7, 82, 82);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.quotas-list li a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(100, 214, 25);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.quotas-list li a:hover {
+    background-color: rgb(71, 144, 22);
+}
+
+.recibo {
+    border: 1px solid black;
+    color: white;
+    margin: 20px;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(100, 214, 25);
+}
+
+.recibo ul {
+    list-style: none;
+    margin-left: 10px;
+}
+
+.recibo button {
+    padding: 7px;
+    margin-top: 5px;
+}
+
+.recibo-pdf {
+    background-color: white;
+    margin: 20px;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#recibo-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+#recibo-content 
+
+.voucher_view {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    margin-top: auto;
+    bottom: 0px;
+    margin-bottom: auto;
+    left: 0px;
+    margin-left: 0px;
+    right: 0px;
+    margin-right: 0px;
+    background-color: rgba(0, 0, 0, 0.509);
+}
+
+.voucher_view img {
+    width: 100%;
+    height: 80%;
+}
+
+@media screen and (max-width:590px) {
+    .numSocio {
+        display: none;
+    }
+
+    .nomAsso {
+        min-width: 175px;
+    }
+}
+
+@media screen and (min-width:300px) and (max-width:480px) {
+    .buscar:hover>.buscar_apellido {
+        width: 170px;
+        font-size: 15px;
+    }
+
+    .buscar_apellido:focus {
+        width: 170px;
+        font-size: 10px;
+    }
+
+    .buscar:hover>.buscar_num_asso {
+        width: 50px;
+        font-size: 15px;
+    }
+
+    .buscar_num_asso:focus {
+        width: 50px;
+        font-size: 10px;
+    }
+
+}
+
+@media screen and (min-width:480px) {
+
+    .buscar:hover>.buscar_apellido {
+        width: 170px;
+    }
+
+    .buscar_apellido:focus {
+        width: 170px;
+    }
+
+    .buscar:hover>.buscar_num_asso {
+        width: 50px;
+    }
+
+    .buscar_num_asso:focus {
+        width: 50px;
+    }
+}
+
+@media screen and (min-width:768px) {
+
+    .buscar:hover>.buscar_apellido {
+        width: 200px;
+    }
+
+    .buscar_apellido:focus {
+        width: 200px;
+    }
+
+    .buscar:hover>.buscar_num_asso {
+        width: 70px;
+    }
+
+    .buscar_num_asso:focus {
+        width: 70px;
+    }
+}
+
+@media screen and (min-width:1024px) {
+
+    .buscar:hover>.buscar_apellido {
+        width: 240px;
+    }
+
+    .buscar_apellido:focus {
+        width: 240px;
+    }
+
+    .buscar:hover>.buscar_num_asso {
+        width: 100px;
+    }
+
+    .buscar_num_asso:focus {
+        width: 100px;
+    }
+}

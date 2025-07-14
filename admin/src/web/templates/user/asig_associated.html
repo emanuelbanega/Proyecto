@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% set active_page = "users" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/associates/associates.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock%}
+{% block title %}
+<title>Asociados</title>
+{% endblock %}
+
+{% block content %}
+
+<table id="tableAsociated" class="tabla">
+    <caption>
+        <div class="div-titulo-buscar">
+            <h1 class="nom-pagina">Listado de asociados:</h1>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th># socio</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th># documento</th>
+            <th>Tipo</th>
+            <th>Asignar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if associates.items %}
+        {% for associated in associates.items %}
+        <tr>
+            <td>{{ associated.id }}</td>
+            <td>{{ associated.name }}</td>
+            <td>{{ associated.surname }}</td>
+            <td>{{ associated.document_number }}</td>
+            <td>{{ associated.document_type }}</td>
+            <td>
+                <a class="btn btn-detalle"
+                    href="{{ url_for('users.asig_associate', user_id=user_id, associated_id=associated.id, current_page=associates.page)}}">Asignar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td></td>
+        <td></td>
+        <td>Sin Asociados</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        {% endif %}
+    </tbody>
+</table>
+
+<div class="paginacion">
+    <ul>
+        {% for page_num in associates.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
+
+        {% if page_num %}
+        {% if page_num==associates.page %}
+        <li>
+            <a class="active">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{ url_for('users.listAssociates', user_id=user_id, num=page_num) }}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li>
+            <a class="threePoints">...</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,191 @@
+@import "../new.css";
+
+#for-box {
+    border: solid 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 3px 3px 10px black;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(11, auto);
+
+    grid-template-areas: "labelNombre labelApellido"
+        "inputNombre inputApellido"
+        "labelTipoDoc labelDoc"
+        "selectTipoDoc inputDoc"
+        "labelGenero labelDire"
+        "selectGenero inputDire"
+        "labelEstado labelTel"
+        "selectEstado inputTel"
+        "labelEmail labelEmail"
+        "inputEmail inputEmail"
+        "botonCancelar botonAgregar";
+}
+
+.labelNombre {
+    grid-area: labelNombre;
+}
+
+.inputNombre {
+    grid-area: inputNombre;
+}
+
+.labelApellido {
+    grid-area: labelApellido;
+}
+
+.inputApellido {
+    grid-area: inputApellido;
+}
+
+.labelTipoDoc {
+    grid-area: labelTipoDoc;
+}
+
+.selectTipoDoc {
+    grid-area: selectTipoDoc;
+    width: 60px;
+    height: 30px;
+}
+
+.labelDoc {
+    grid-area: labelDoc;
+}
+
+.inputDoc {
+    grid-area: inputDoc;
+}
+
+.labelGenero {
+    grid-area: labelGenero;
+}
+
+.selectGenero {
+    grid-area: selectGenero;
+    width: 60px;
+    height: 30px;
+}
+
+.labelDire {
+    grid-area: labelDire;
+}
+
+.inputDire {
+    grid-area: inputDire;
+}
+
+.labelEstado {
+    grid-area: labelEstado;
+}
+
+.selectEstado {
+    grid-area: selectEstado;
+    width: max-content;
+    height: 35px;
+}
+
+.labelTel {
+    grid-area: labelTel;
+}
+
+.inputTel {
+    grid-area: inputTel;
+}
+
+.labelEmail {
+    grid-area: labelEmail;
+}
+
+.inputEmail {
+    grid-area: inputEmail;
+}
+
+.botonAgregar {
+    grid-area: botonAgregar;
+}
+
+.botonCancelar {
+    grid-area: botonCancelar;
+}
+
+.div-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#for-box select {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+#for-box option {
+    background: black;
+}
+
+@media screen and (max-width: 928px) {
+    #for-box {
+        grid-gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(14, auto);
+
+        grid-template-areas: "labelNombre labelNombre"
+            "inputNombre inputNombre"
+            "labelApellido labelApellido"
+            "inputApellido inputApellido"
+            "labelTipoDoc labelDoc"
+            "selectTipoDoc inputDoc"
+            "labelEstado labelGenero"
+            "selectEstado selectGenero"
+            "labelDire labelDire"
+            "inputDire inputDire"
+            "labelTel labelTel"
+            "inputTel inputTel"
+            "labelEmail labelEmail"
+            "inputEmail inputEmail"
+            "botonAgregar botonCancelar";
+        width: 100%;
+    }
+
+    .div-select {
+        align-items: initial;
+    }
+}
+
+@media screen and (max-width: 528px) {
+    .content {
+        font-size: 13px;
+    }
+
+    #for-box {
+        grid-gap: 0px;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(20, auto);
+
+        grid-template-areas: "labelNombre"
+            "inputNombre"
+            "labelApellido"
+            "inputApellido"
+            "labelTipoDoc"
+            "selectTipoDoc"
+            "labelDoc"
+            "inputDoc"
+            "labelGenero"
+            "selectGenero"
+            "labelEstado"
+            "selectEstado"
+            "labelDire"
+            "inputDire"
+            "labelTel"
+            "inputTel"
+            "labelEmail"
+            "inputEmail"
+            "botonAgregar"
+            "botonCancelar";
+    }
+}

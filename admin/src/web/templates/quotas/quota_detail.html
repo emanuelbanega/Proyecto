@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/quota_detail.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Detalle Cuota</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div id="for-box">
+    <div class="cabecera h2DatosCuota"><i class="fa-solid fa-id-card"></i>
+        <h2>Datos de la cuota:</h2>
+    </div>
+    <div class="datoNumCuota">
+        <label class="labelNumCuota"># cuota: </label>
+        <label class="dato-quota">{{quota.id}}</label>
+    </div>
+    <div class="datoEstado">
+        <label class="labelEstado">Estado: </label>
+        <label class="dato-quota">{% if quota.state %} Pagada {% else %} Pendiente {% endif %}</label>
+    </div>
+    <div class="datoVencimiento">
+        <label class="labelVencimiento">{% if quota.state %} fecha de pago: {% else %} Vencimiento: {% endif %}</label>
+        <label class="dato-quota">{% if quota.state %} {{quota.payment.date.strftime('%d-%m-%Y')}} {% else %}
+            {{quota.end_date.strftime('%d-%m-%Y')}} {% endif%}</label>
+    </div>
+    <div class="datoMontoSocio">
+        <label class="labelMontoSocio">Monto socio: </label>
+        <label class="dato-quota">{{sportData.currency_type}} {{sportData.membership_amount}}</label>
+    </div>
+    <div class="tablaDisciplinas">
+        <table class="tabla">
+            <caption>
+                <div class="cabecera">
+                    <i class="fa-solid fa-volleyball"></i>
+                    <h2>Disciplinas:</h2>
+                </div>
+            </caption>
+            <thead>
+                <tr>
+                    <th>disciplina:</th>
+                    <th>categoria:</th>
+                    <th>monto:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if sportData.sports %}
+                {% for sport in sportData.sports %}
+                <tr>
+                    <td>{{sport.Name}}</td>
+                    <td>{{sport.division}}</td>
+                    <td>{{sportData.currency_type}} {{sport.monthly_fee}}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td></td>
+                    <td>Sin disciplinas</td>
+                    <td></td>
+                </tr>
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <th>impuesto: {{sportData.currency_type}} {{tax}}</th>
+                    <td>Total: {{sportData.currency_type}} {{sportData.total_amount + tax}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div id="div-botones">
+        <a class="btn btn-volver" href="{{ url_for('quotas.quotas_index_page',id_associated=id_associated,num_page=return_page) }}">volver</a>
+        {% if not quota.state %}
+            <form action="{{ url_for('payments.pagar_post',quotaId=quota.id,current_page=return_page)}}" method="POST">
+                <input type="submit" class="btn btn-pagar" value="pagar"/>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

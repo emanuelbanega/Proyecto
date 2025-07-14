@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% set navigation_bar = [
+('/', 'home', 'Home'),
+('/asociados/1', 'associates', 'Asociados'),
+('/usuarios/1', 'users', 'Usuarios'),
+('/disciplinas/1', 'sports', 'Disciplinas'),
+('/pagos/1', 'payments', 'Pagos'),
+] -%}
+{% set active_page = active_page|default('home') -%}
+{% set nav_menu_view = nav_menu_view|default(False) %}
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+    {% endblock %}
+
+
+    {% block title %}
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    {% block liks %}
+    {% endblock %}
+</head>
+
+<body>
+    {% block nav %}
+    <nav class="navbar">
+        <a class="boton-logo" href="{{ '/' }}">
+            <img id="logo" src="{{ url_for('static',filename='images/logo.jpg') }}" alt="logo">
+        </a>
+        <ul class="nav_options">
+            {% for href, id, caption in navigation_bar %}
+            {% if id != "users" %}
+            <li>
+                <a {% if id==active_page %} class="active" {% endif %} href="{{ href|e }}">{{ caption|e }}</a>
+            </li>
+            {% elif email_has_permission(session["user"],"users_index") %}
+            <li>
+                <a {% if id==active_page %} class="active" {% endif %} href="{{ href|e }}">{{ caption|e }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+        <div id="user_info" class="user_info">
+            <img id="user_photo"
+                src="{{ 'https://admin-grupo17.proyecto2022.linti.unlp.edu.ar/public/images/users/' + session['photo'] }}"
+                alt="user_photo">
+
+            <a id="user_name">{{ session['name'] }}</a>
+
+        </div>
+    </nav>
+    <ul id="nav-menu" class="nav-menu">
+        {% for href, id, caption in navigation_bar %}
+        {% if id != "users" %}
+        <li class="option_nav_menu">
+            <a {% if id==active_page %} class="active" {% endif %} href="{{ href|e }}">{{
+                caption|e }}</a>
+        </li>
+        {% elif email_has_permission(session["user"],"users_index") %}
+        <li class="option_nav_menu">
+            <a {% if id==active_page %} class="active" {% endif %} href="{{ href|e }}">{{
+                caption|e }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <li class="nav-menu-item">
+            <a href="/perfil/" class="nav-menu-link">Perfil</a>
+        </li>
+        <li class="nav-menu-item">
+            <a href="/config/" class="nav-menu-link">Configuración</a>
+        </li>
+        <li class="nav-menu-Cerrar-sesion">
+            <a href="{{ url_for('auth.logout') }}" class="nav-menu-link" style="color: #fff;"
+                onclick="return confirm('¿Quiere cerrar Sesión?')">Cerrar Sesion</a>
+        </li>
+    </ul>
+    {% endblock %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div id="flash" class="flash {{category}}" style="">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor%}
+    {% endif %}
+    {% endwith %}
+    <div class="content">
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
+    </div>
+</body>
+<script>
+    function hideFlash() {
+        if (document.getElementById('flash').style.display == '') {
+            document.getElementById('flash').style.display = 'none';
+        }
+    }
+    setTimeout("hideFlash()", 5000);
+
+    let showMenu = false
+    const userInfo = document.getElementById("user_info");
+    const menu = document.getElementById('nav-menu');
+
+    userInfo.addEventListener('click', () => {
+        showMenu ? menu.style.display = "none" : menu.style.display = "block";
+        showMenu = !showMenu;
+    });
+</script>
+{% block script %}
+{% endblock %}
+
+</html>

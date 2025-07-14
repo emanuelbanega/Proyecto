@@ -1,0 +1,152 @@
+{% extends 'layout.html' %}
+{% set active_page = "config" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/config.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/styles.css') }}">
+{% endblock %}
+{% block title %}
+<title>Configuracion</title>
+{% endblock %}
+
+{% block content %}
+<h1>Configuracion General</h1>
+
+<form class="config_container" action="{{ url_for('config.save_config')}}" method="post">
+    <!-- TODO validar que solo el admin pueda cambiar los valores-->
+    {% if user_can_update %}
+    <div class="form_item">
+        <label for="cantElements">Cant Elementos Por Pagina</label>
+        <input name="cantElements" type="number" value={{settingObj.cant_elements_page}} required>
+    </div>
+
+    <br>
+    <div class="form_item">
+        <label for="enablePayTable">Mostrar tabla de pagos en app publica</label>
+        <select name="enablePayTable" required>
+            {% if settingObj.enable_pay_table %}
+            <option value="1" selected>Si</option>
+            <option value="2">No</option>
+            {% else %}
+            <option value="1">Si</option>
+            <option value="2" selected>No</option>
+            {% endif %}
+
+        </select>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="contactInfo">Informacion de contacto</label>
+        <input name="contactInfo" type="text" value={{settingObj.contact_info}} required>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="contactInfo">Email de contacto</label>
+        <input name="contactEmail" type="text" value={{settingObj.contact_email}} required>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="voucherTitle">Encabezado recibo de pago</label>
+        <input name="voucherTitle" type="text" value={{settingObj.voucher_title}} required>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="priceMonth">Valor cuota mensual base</label>
+        <input name="priceMonth" type="number" value={{settingObj.price_month}} required>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="percentIncrease">Porcentaje de recargo para coutas adeudadas</label>
+        <input name="percentIncrease" type="number" value={{settingObj.percent_increase_debtors}} required>
+        <span>%</span>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="currencyType">Tipo de Moneda</label>
+        <select name="currencyType" required>
+            {% for type in currency_types %}
+            {% if type == settingObj.currency_type %}
+            <option value="{{ type }}" selected>{{type}}</option>
+            {% else %}
+            <option value="{{ type }}">{{type}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="currencyType">Descripción del Home</label><br>
+        <textarea name="descriptionHome" rows="6" cols="35"
+            placeholder="Descripción que se muestra en el home">{{ settingObj.description_home }}</textarea>
+    </div>
+
+    <input class="btn-guardar" type="submit" value="Guardar">
+
+    {% else %}
+
+    <div class="form_item">
+        <label for="cantElements">Cant Elementos Por Pagina</label>
+        <input name="cantElements" disabled type="number" value={{ settingObj.cant_elements_page }}>
+    </div>
+
+    <br>
+    <div class="form_item">
+        <label for="enablePayTable">Mostrar tabla de pagos en app publica</label>
+        <select name="enablePayTable" disabled>
+            {% if settingObj.enable_pay_table %}
+            <option value="1" selected>Si</option>
+            <option value="2">No</option>
+            {% else %}
+            <option value="1">Si</option>
+            <option value="2" selected>No</option>
+            {% endif %}
+
+        </select>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="contactInfo">Informacion de contacto</label>
+        <input name="contactInfo" disabled type="text" value={{settingObj.contact_info}}>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="contactInfo">Email de contacto</label>
+        <input name="contactEmail" disabled type="text" value={{settingObj.contact_email}} required>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="voucherTitle">Encabezado recibo de pago</label>
+        <input name="voucherTitle" disabled type="text" value={{settingObj.voucher_title}}>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="priceMonth">Valor cuota mensual base</label>
+        <input name="priceMonth" disabled type="number" value={{settingObj.price_month}}>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="percentIncrease">% de recargo para coutas adeudadas</label>
+        <input name="percentIncrease" disabled type="number" value={{settingObj.percent_increase_debtors}}>
+        <span>%</span>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="currencyType">Tipo de Moneda</label>
+        <select name="currencyType">
+            {% for type in currency_types %}
+            {% if type == settingObj.currency_type %}
+            <option value="{{ type }}" selected>{{type}}</option>
+            {% else %}
+            <option value="{{ type }}">{{type}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form_item">
+        <label for="currencyType">Descripción del Home</label><br>
+        <textarea disabled name="descriptionHome" rows="6" cols="35"
+            placeholder="Descripción que se muestra en el home">{{ settingObj.description_home }}</textarea>
+    </div>
+    {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/payments.css') }}">
+{% endblock %}
+{% block liks %}
+<script src="https://kit.fontawesome.com/e480f6dd1b.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %}
+<title>Cuotas</title>
+{% endblock %}
+
+{% block content %}
+
+<table class="tabla">
+    <caption>
+        <div class="div-titulo-buscar">
+            <h1 class="nom-pagina">Listado de cuotas:</h1>
+            <div class="div-buscar">
+                <form class="buscar" action="{{ url_for('quotas.filtrar',id_associated=id_associated)}}" method="POST">
+                    <select class="select-estado" name="estado">
+                        <option value="all">Estado</option>
+                        <option value=True>Pagado</option>
+                        <option value=False>Pendiente</option>
+                    </select>
+                    <button class="boton-filtrar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th># Cuota</th>
+            <th>Vencimiento</th>
+            <th>Estado</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if quotas.items %}
+        {% for quota in quotas.items %}
+        <tr>
+            <td>{{ quota.id }}</td>
+            <td>{{ quota.end_date.strftime('%d-%m-%Y')}}</td>
+            <td>{% if quota.state %} pagado {% else %} pendiente {% endif %}</td>
+            <td>
+                <a class="btn btn-detalle"
+                    href="{{ url_for('quotas.quota_detail', id_associated=id_associated, id_quota=quota.id, current_page=quotas.page) }}">Detalle</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td></td>
+        <td>Sin Cuotas</td>
+        <td></td>
+        <td></td>
+        {% endif %}
+    </tbody>
+</table>
+<div class="paginacion">
+    <ul>
+        {% for page_num in quotas.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
+
+        {% if page_num %}
+        {% if page_num==quotas.page %}
+        <li>
+            <a class="active">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{ url_for('quotas.quotas_index_page', id_associated=id_associated, num_page=page_num) }}"> {{
+                page_num }}</a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li>
+            <a class="threePoints">...</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+    </ul>
+</div>
+<div class="div-btn">
+    <a class="btn btn-volver"
+        href="{{ url_for('associates.associated_detail', associated_id=id_associated, current_page=1) }}">volver</a>
+</div>
+{% endblock %}

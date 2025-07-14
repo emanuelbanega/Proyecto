@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% set active_page = "home" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
+{% endblock %}
+{% block title %}
+<title>Club Vecinal</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<h1>Bienvenid@</h1>
+<h3>Ultima noticia</h3>
+<p>Lionel Messi lanza holding para invertir en deportes, medios y tecnología a nivel mundial según confirmó la agencia
+    AFP. Con sede en San Francisco, Play Time Sports-Tech HoldCo será el principal vehículo de inversión de Messi. La
+    compañía explorará oportunidades "independientes del escenario" que podrían incluir, por ejemplo, ayudar a los
+    fundadores de nuevas empresas a construir compañías de tecnología de fútbol o invertir en equipos.</p>
+<img src="{{ url_for('static',filename='images/hazlo-por-ella.jpg' ) }}" alt="hazlo por ella">
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block title %}
+<title>Login | club</title>
+{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+{% block content %}
+<div id="login-box">
+    <img class="logo" src="{{ url_for('static',filename='images/logo.jpg') }}" alt="Logo del Club">
+    <h1>Iniciar Sesion</h1>
+    <form action="{{ url_for('auth.authenticate')}}" method="POST">
+        <!-- Correo -->
+        <label for="label-email">Correo:</label>
+        <input type="email" id="log-userName" name="email" placeholder="Ingrese el email" maxlength="50" autofocus
+            required>
+        <!-- Password -->
+        <label for="label-password">Contraseña:</label>
+        <!-- <p><a href="#">Forgot your password?</a> -->
+        <input type="password" id="log-pass" name="password" placeholder="Ingrese la contraseña" maxlength="30"
+            autofocus required>
+        <!-- Submit Button -->
+        <input type="submit" value="Iniciar Sesion">
+        <a href="#">¿Olvidaste tu contraseña?</a><br>
+        <!-- <a href="#">¿No tienes una cuenta?</a> -->
+    </form>
+</div>
+{% endblock %}

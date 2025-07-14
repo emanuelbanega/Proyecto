@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% set active_page = "associates" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/carnet.css') }}">
+{% endblock %}
+{% block title %}
+<title>Visualizar Carnet</title>
+{% endblock %}
+
+{% block nav %}
+{{super()}}
+{% endblock %}
+{% block content %}
+
+<div id="recibo" class="recibo-pdf">
+    <h2>Club Deportivo Villa Elisa</h2>
+    <div id="recibo-content">
+        <img class="img_user" src="{{ url_for('static',filename='images/users/'+ carnet.photo ) }}"
+        alt="foto de usuario" data-image-width="700" data-image-height="700" style="width: 200px;height:200px">
+        <div style="display:flex;flex-direction: column;">
+            <small>{{associated.name}} {{associated.surname}}</small>
+            <small>DNI: {{associated.document_number}}</small>
+            <small>Socio: #{{associated.id}}</small>
+            <small>Fecha de alta: {{associated.discharge_date.strftime('%d-%m-%Y')}}</small>
+            <small>Estado: {% if defaulter %} Moroso {% else %} Al dia {% endif %}</small>
+            <img class="img_user" src="{{ url_for('static',filename='images/qr/'+ carnet.qr ) }}"
+            alt="foto de carnet" data-image-width="700" data-image-height="700" style="width: 100px;height:100px">
+        </div>
+    </div>
+</div>
+<a class="btn-volver" href="{{ url_for('associates.associated_index_page', num = return_page) }}">Volver</a>
+<button class="btn-volver" style="background-color: grey;" onclick="javascript:downloadVoucher();">Descargar</button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script>
+    function downloadVoucher() {
+
+        const recibo = document.getElementById('recibo');
+
+        html2canvas(recibo, {
+            onrendered: function (canvasObj) {
+                var pdf = new jsPDF({
+                    orientation: "landscape",
+                    unit: "in",
+                    format: [8, 4]
+                }),
+                    pdfConf = {
+                        pagesplit: false,
+                        backgroundColor: '#FFF'
+                    };
+                document.body.appendChild(canvasObj); //appendChild is required for html to add page in pdf
+                pdf.addHTML(canvasObj, 0, 0, pdfConf, function () {
+                    document.body.removeChild(canvasObj);
+                    //pdf.addPage();
+                    pdf.save(`credential.pdf`);
+                    window.location.reload()
+                });
+            }
+        });
+    }
+
+</script>
+{% endblock %}
